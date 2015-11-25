@@ -5,14 +5,27 @@
 var weather = require('./weather.js');
 var location = require('./location.js');
 
-weather(function(weather){
-    console.log(weather);
-})
-location(function(location){
-    if(!location){
-        console.log("no location");
-        return;
-    }
-    console.log(location.city);
-    console.log(location.loc);
-})
+var argv= require('yargs').option('location',{
+    alias:'l',
+    demand:false,
+    describe:'location flag',
+    type:'string'
+}).help('help').argv;
+
+
+if(typeof argv.l === 'string'&&argv.l.length>0) {
+    weather(argv.l, function (weather) {
+        console.log(weather);
+    })
+}else{
+    location(function(location){
+        if(location){
+            weather(location.city, function (weather) {
+                console.log(weather);
+            })
+        }else{
+            console.log('Unable to get');
+        }
+    });
+}
+

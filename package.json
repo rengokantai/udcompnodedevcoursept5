@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rengokantai/udcompnodedevcoursept5",
   "dependencies": {
-    "request": "^2.67.0"
+    "request": "^2.67.0",
+    "yargs": "^3.30.0"
   }
 }
