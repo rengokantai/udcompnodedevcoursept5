@@ -14,18 +14,29 @@ var argv= require('yargs').option('location',{
 
 
 if(typeof argv.l === 'string'&&argv.l.length>0) {
-    weather(argv.l, function (weather) {
+    //weather(argv.l, function (weather) {
+    //    console.log(weather);
+    //})
+    weather(argv.l).then(function (weather) {
         console.log(weather);
-    })
+    }).catch(function(err){
+        console.log(err);
+    });
 }else{
-    location(function(location){
-        if(location){
-            weather(location.city, function (weather) {
-                console.log(weather);
-            })
-        }else{
-            console.log('Unable to get');
-        }
+        //location(function(location){
+        //if(location){
+        //    weather(location.city, function (weather) {
+        //        console.log(weather);
+        //    })
+        //}else{
+        //    console.log('Unable to get');
+        //}
+    location().then(function(loc){
+        return weather(loc.city);
+    }).then(function(weather){
+        console.log(weather);
+    }).catch(function(err){
+        console.log(err);
     });
 }
 
